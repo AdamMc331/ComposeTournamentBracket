@@ -1,6 +1,6 @@
 @file:Suppress("MagicNumber")
 
-package template.theme
+package com.adammcneilly.tournament.bracket.theme
 
 import androidx.compose.ui.graphics.Color
 

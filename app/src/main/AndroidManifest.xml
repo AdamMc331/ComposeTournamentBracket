@@ -10,7 +10,7 @@
         android:theme="@style/Theme.AppTheme">
 
         <activity
-            android:name="template.MainActivity"
+            android:name="com.adammcneilly.tournament.bracket.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize">

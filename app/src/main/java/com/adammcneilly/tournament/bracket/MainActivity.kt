@@ -1,4 +1,4 @@
-package template
+package com.adammcneilly.tournament.bracket
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,8 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
+import com.adammcneilly.tournament.bracket.theme.BracketTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import template.theme.TemplateTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             ConfigureTransparentSystemBars()
 
-            TemplateTheme {
+            BracketTheme {
                 Surface(
                     color = MaterialTheme.colorScheme.background,
                 ) {

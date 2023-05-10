@@ -1,4 +1,4 @@
-package template.theme
+package com.adammcneilly.tournament.bracket.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Shapes
