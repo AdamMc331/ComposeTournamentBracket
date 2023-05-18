@@ -7,3 +7,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Tournament Bracket"
 include(":app")
+include(":library")
