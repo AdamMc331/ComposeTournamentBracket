@@ -10,4 +10,5 @@ package com.adammcneilly.tournament.bracket
 data class BracketTeamDisplayModel(
     val name: String,
     val isWinner: Boolean,
+    val score: String,
 )

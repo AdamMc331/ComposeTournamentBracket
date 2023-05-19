@@ -3,7 +3,11 @@ package com.adammcneilly.tournament.bracket
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Divider
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Text
@@ -65,13 +69,28 @@ private fun TeamRow(
         null
     }
 
-    Text(
-        text = team.name,
-        fontWeight = fontWeight,
-        color = color,
-        maxLines = 1,
-        overflow = TextOverflow.Ellipsis,
-        modifier = Modifier
-            .padding(8.dp),
-    )
+    Row {
+        Text(
+            text = team.name,
+            fontWeight = fontWeight,
+            color = color,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier
+                .padding(8.dp)
+                .weight(1F),
+        )
+
+        Spacer(modifier = Modifier.width(8.dp))
+
+        Text(
+            text = team.score,
+            fontWeight = fontWeight,
+            color = color,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier
+                .padding(8.dp),
+        )
+    }
 }
