@@ -59,7 +59,11 @@ fun DoubleEliminationBracketPager(
         }
 
         BracketPager(
-            rounds = upperBracketRounds,
+            rounds = if (selectedText.value == "Upper Bracket") {
+                upperBracketRounds
+            } else {
+                lowerBracketRounds
+            },
             modifier = modifier,
         )
     }

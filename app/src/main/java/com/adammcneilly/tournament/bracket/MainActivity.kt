@@ -35,8 +35,8 @@ class MainActivity : ComponentActivity() {
                         .systemBarsPadding(),
                 ) {
                     DoubleEliminationBracketPager(
-                        upperBracketRounds = TestData.singleEliminationBracketRounds,
-                        lowerBracketRounds = emptyList(),
+                        upperBracketRounds = TestData.upperBracketRounds,
+                        lowerBracketRounds = TestData.lowerBracketRounds,
                     )
                 }
             }
