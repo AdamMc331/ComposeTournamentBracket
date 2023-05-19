@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PageSize
 import androidx.compose.foundation.pager.PagerState
@@ -48,7 +50,7 @@ fun BracketPager(
         BracketRoundTabs(pagerState, rounds, coroutineScope)
 
         HorizontalPager(
-            pageCount = 3,
+            pageCount = rounds.size,
             modifier = Modifier
                 .weight(1F),
             contentPadding = PaddingValues(16.dp),
@@ -61,7 +63,11 @@ fun BracketPager(
             state = pagerState,
         ) { pageIndex ->
 
-            val itemHeight = if (pageIndex <= pagerState.currentPage) {
+            val isCurrentOrPreviousPage = pageIndex <= pagerState.currentPage
+            val roundSize = rounds[pageIndex].matches.size
+            val previousRoundSize = rounds.getOrNull(pageIndex - 1)?.matches?.size
+            val sameSizeAsLastRound = roundSize == previousRoundSize
+            val itemHeight = if (isCurrentOrPreviousPage || sameSizeAsLastRound) {
                 BRACKET_ITEM_HEIGHT
             } else {
                 val fullHeight = BRACKET_ITEM_HEIGHT * 2
@@ -83,11 +89,11 @@ private fun RoundMatchList(
     matches: List<BracketMatchDisplayModel>,
     itemHeight: Dp,
 ) {
-    Column(
+    LazyColumn(
         modifier = Modifier
             .fillMaxHeight(),
     ) {
-        matches.forEach { match ->
+        items(matches) { match ->
             BracketMatchItem(
                 match = match,
                 modifier = Modifier
