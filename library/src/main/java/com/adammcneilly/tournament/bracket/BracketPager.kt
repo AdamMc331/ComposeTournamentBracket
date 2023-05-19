@@ -1,7 +1,6 @@
 package com.adammcneilly.tournament.bracket
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -12,10 +11,8 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PageSize
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -126,8 +123,8 @@ private fun BracketRoundTabs(
                     text = bracketRound.name,
                     modifier = Modifier
                         .padding(
-                        horizontal = 8.dp,
-                    ),
+                            horizontal = 8.dp,
+                        ),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
