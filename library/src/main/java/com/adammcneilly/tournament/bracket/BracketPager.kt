@@ -1,6 +1,5 @@
 package com.adammcneilly.tournament.bracket
 
-import android.content.res.Configuration
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -12,39 +11,45 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PageSize
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.Surface
+import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.adammcneilly.tournament.bracket.theme.BracketTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalFoundationApi::class)
+private val BRACKET_ITEM_HEIGHT = 100.dp
+
+/**
+ * The main component of a bracket. Given some number of [rounds], convert them
+ * into pages within a horizontal pager, with each page showing the matches for
+ * that round. This also includes a tab bar at the top with each round so users can
+ * quickly jump to a specific one.
+ */
+@ExperimentalFoundationApi
 @Composable
 fun BracketPager(
     rounds: List<BracketRound>,
     modifier: Modifier = Modifier,
-    bracketItemHeight: Dp = 100.dp,
 ) {
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
 
-    Column {
+    Column(
+        modifier = modifier
+            .fillMaxWidth(),
+    ) {
         BracketRoundTabs(pagerState, rounds, coroutineScope)
 
         HorizontalPager(
             pageCount = 3,
-            modifier = modifier
-                .fillMaxWidth()
+            modifier = Modifier
                 .weight(1F),
             contentPadding = PaddingValues(16.dp),
             pageSpacing = 16.dp,
@@ -57,10 +62,10 @@ fun BracketPager(
         ) { pageIndex ->
 
             val itemHeight = if (pageIndex <= pagerState.currentPage) {
-                bracketItemHeight
+                BRACKET_ITEM_HEIGHT
             } else {
-                val fullHeight = bracketItemHeight * 2
-                val diffByOffset = (fullHeight - bracketItemHeight) * pagerState.currentPageOffsetFraction
+                val fullHeight = BRACKET_ITEM_HEIGHT * 2
+                val diffByOffset = (fullHeight - BRACKET_ITEM_HEIGHT) * pagerState.currentPageOffsetFraction
                 val heightToRender = (fullHeight - diffByOffset)
                 heightToRender
             }
@@ -75,7 +80,7 @@ fun BracketPager(
 
 @Composable
 private fun RoundMatchList(
-    matches: List<Match>,
+    matches: List<BracketMatchDisplayModel>,
     itemHeight: Dp,
 ) {
     Column(
@@ -92,14 +97,17 @@ private fun RoundMatchList(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
+@ExperimentalFoundationApi
 @Composable
 private fun BracketRoundTabs(
     pagerState: PagerState,
     rounds: List<BracketRound>,
     coroutineScope: CoroutineScope,
 ) {
-    TabRow(selectedTabIndex = pagerState.currentPage) {
+    ScrollableTabRow(
+        selectedTabIndex = pagerState.currentPage,
+        edgePadding = 16.dp,
+    ) {
         rounds.forEachIndexed { index, bracketRound ->
             Tab(
                 selected = pagerState.currentPage == index,
@@ -108,37 +116,19 @@ private fun BracketRoundTabs(
                         pagerState.animateScrollToPage(index)
                     }
                 },
+                modifier = Modifier
+                    .height(48.dp),
             ) {
                 Text(
-                    text = bracketRound.roundName,
-                    modifier = Modifier.padding(8.dp),
+                    text = bracketRound.name,
+                    modifier = Modifier
+                        .padding(
+                            horizontal = 8.dp,
+                        ),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
             }
-        }
-    }
-}
-
-@Preview(
-    name = "Day Mode",
-    uiMode = Configuration.UI_MODE_NIGHT_NO,
-)
-@Preview(
-    name = "Night Mode",
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-)
-@Composable
-private fun BracketPagerPreview() {
-    BracketTheme {
-        Surface {
-            BracketPager(
-                rounds = listOf(
-                    BracketRound("Quarterfinals", quarterfinals),
-                    BracketRound("Semifinals", semiFinals),
-                    BracketRound("Grand Final", grandFinals),
-                ),
-            )
         }
     }
 }
