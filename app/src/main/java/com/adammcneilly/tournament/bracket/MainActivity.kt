@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -18,7 +19,7 @@ import com.adammcneilly.tournament.bracket.theme.BracketTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 class MainActivity : ComponentActivity() {
-    @OptIn(ExperimentalFoundationApi::class)
+    @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -33,8 +34,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier
                         .systemBarsPadding(),
                 ) {
-                    BracketPager(
-                        rounds = TestData.singleEliminationBracketRounds,
+                    DoubleEliminationBracketPager(
+                        upperBracketRounds = TestData.singleEliminationBracketRounds,
+                        lowerBracketRounds = emptyList(),
                     )
                 }
             }
