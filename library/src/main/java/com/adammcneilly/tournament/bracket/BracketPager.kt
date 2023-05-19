@@ -37,7 +37,7 @@ private val BRACKET_ITEM_HEIGHT = 100.dp
 @ExperimentalFoundationApi
 @Composable
 fun BracketPager(
-    rounds: List<BracketRound>,
+    rounds: List<BracketRoundDisplayModel>,
     modifier: Modifier = Modifier,
 ) {
     val pagerState = rememberPagerState()
@@ -107,7 +107,7 @@ private fun RoundMatchList(
 @Composable
 private fun BracketRoundTabs(
     pagerState: PagerState,
-    rounds: List<BracketRound>,
+    rounds: List<BracketRoundDisplayModel>,
     coroutineScope: CoroutineScope,
 ) {
     ScrollableTabRow(
