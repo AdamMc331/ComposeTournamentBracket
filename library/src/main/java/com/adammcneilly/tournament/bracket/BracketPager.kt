@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PageSize
 import androidx.compose.foundation.pager.PagerState
@@ -17,6 +19,7 @@ import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
@@ -42,6 +45,9 @@ fun BracketPager(
 ) {
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
+    val lazyListStates = List(rounds.size) {
+        rememberLazyListState()
+    }
 
     Column(
         modifier = modifier
@@ -62,9 +68,10 @@ fun BracketPager(
             },
             state = pagerState,
         ) { pageIndex ->
+            val round = rounds[pageIndex]
 
             val isCurrentOrPreviousPage = pageIndex <= pagerState.currentPage
-            val roundSize = rounds[pageIndex].matches.size
+            val roundSize = round.matches.size
             val previousRoundSize = rounds.getOrNull(pageIndex - 1)?.matches?.size
             val sameSizeAsLastRound = roundSize == previousRoundSize
             val itemHeight = if (isCurrentOrPreviousPage || sameSizeAsLastRound) {
@@ -76,9 +83,30 @@ fun BracketPager(
                 heightToRender
             }
 
+            // Sync lazy list state of this page with the next one
+            val currentLazyListState = lazyListStates[pageIndex]
+            val nextLazyListState = lazyListStates.getOrNull(pageIndex + 1)
+
+            LaunchedEffect(currentLazyListState.firstVisibleItemScrollOffset) {
+                nextLazyListState?.scrollToItem(
+                    currentLazyListState.firstVisibleItemIndex,
+                    currentLazyListState.firstVisibleItemScrollOffset,
+                )
+            }
+
+            if (nextLazyListState != null) {
+                LaunchedEffect(nextLazyListState.firstVisibleItemScrollOffset) {
+                    currentLazyListState.scrollToItem(
+                        nextLazyListState.firstVisibleItemIndex,
+                        nextLazyListState.firstVisibleItemScrollOffset,
+                    )
+                }
+            }
+
             RoundMatchList(
-                matches = rounds[pageIndex].matches,
+                matches = round.matches,
                 itemHeight = itemHeight,
+                lazyListState = lazyListStates[pageIndex],
             )
         }
     }
@@ -88,10 +116,12 @@ fun BracketPager(
 private fun RoundMatchList(
     matches: List<BracketMatchDisplayModel>,
     itemHeight: Dp,
+    lazyListState: LazyListState,
 ) {
     LazyColumn(
         modifier = Modifier
             .fillMaxHeight(),
+        state = lazyListState,
     ) {
         items(matches) { match ->
             BracketMatchItem(
