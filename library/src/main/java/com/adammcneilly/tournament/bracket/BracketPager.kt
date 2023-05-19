@@ -64,7 +64,9 @@ fun BracketPager(
         ) { pageIndex ->
 
             val isCurrentOrPreviousPage = pageIndex <= pagerState.currentPage
-            val sameSizeAsLastRound = pageIndex > 0 && rounds[pageIndex].matches.size == rounds[pageIndex - 1].matches.size
+            val roundSize = rounds[pageIndex].matches.size
+            val previousRoundSize = rounds.getOrNull(pageIndex - 1)?.matches?.size
+            val sameSizeAsLastRound = roundSize == previousRoundSize
             val itemHeight = if (isCurrentOrPreviousPage || sameSizeAsLastRound) {
                 BRACKET_ITEM_HEIGHT
             } else {
