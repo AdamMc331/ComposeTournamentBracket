@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
                         .systemBarsPadding(),
                 ) {
                     BracketPager(
-                        rounds = TestData.bracketRounds,
+                        rounds = TestData.singleEliminationBracketRounds,
                     )
                 }
             }

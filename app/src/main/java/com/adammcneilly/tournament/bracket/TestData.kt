@@ -1,7 +1,7 @@
 package com.adammcneilly.tournament.bracket
 
 object TestData {
-    private val quarterFinals = listOf(
+    private val singleEliminationQuarterFinals = listOf(
         BracketMatchDisplayModel(
             BracketTeamDisplayModel(
                 name = "Karmine Corp",
@@ -52,7 +52,7 @@ object TestData {
         ),
     )
 
-    private val semiFinals = listOf(
+    private val singleEliminationSemiFinals = listOf(
         BracketMatchDisplayModel(
             BracketTeamDisplayModel(
                 name = "Moist Esports",
@@ -79,7 +79,7 @@ object TestData {
         ),
     )
 
-    private val grandFinals = listOf(
+    private val singleEliminationGrandFinals = listOf(
         BracketMatchDisplayModel(
             BracketTeamDisplayModel(
                 name = "Moist Esports",
@@ -94,18 +94,18 @@ object TestData {
         ),
     )
 
-    val bracketRounds = listOf(
+    val singleEliminationBracketRounds = listOf(
         BracketRound(
             name = "Quarter Finals",
-            matches = quarterFinals,
+            matches = singleEliminationQuarterFinals,
         ),
         BracketRound(
             name = "Semi Finals",
-            matches = semiFinals,
+            matches = singleEliminationSemiFinals,
         ),
         BracketRound(
             name = "Grand Finals",
-            matches = grandFinals,
+            matches = singleEliminationGrandFinals,
         ),
     )
 }
