@@ -29,6 +29,10 @@ fun MultiEliminationBracket(
 ) {
     val expanded = remember { mutableStateOf(false) }
     val selectedBracket = remember { mutableStateOf(brackets.first()) }
+    // I had to pull this out because switching between brackets was causing an issue because the
+    // selected round as it was remembered by the bracket composable was no longer the same.
+    // I think a long term solution is to create a `BracketState` data class.
+    val selectedRound = remember { mutableStateOf(brackets.first().rounds.first()) }
 
     Column {
         ExposedDropdownMenuBox(
@@ -56,6 +60,7 @@ fun MultiEliminationBracket(
                         text = { Text(text = item.name) },
                         onClick = {
                             selectedBracket.value = item
+                            selectedRound.value = item.rounds.first()
                             expanded.value = false
                         },
                     )
@@ -65,7 +70,11 @@ fun MultiEliminationBracket(
 
         Bracket(
             bracket = selectedBracket.value,
+            selectedRound = selectedRound.value,
             modifier = modifier,
+            onSelectedRoundChanged = { round ->
+                selectedRound.value = round
+            },
         )
     }
 }

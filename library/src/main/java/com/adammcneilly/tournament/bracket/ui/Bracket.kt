@@ -5,17 +5,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import com.adammcneilly.tournament.bracket.displaymodels.BracketDisplayModel
+import com.adammcneilly.tournament.bracket.displaymodels.BracketRoundDisplayModel
 import com.adammcneilly.tournament.bracket.internal.BracketRoundTabRow
 import com.adammcneilly.tournament.bracket.internal.BracketRoundsPager
 import kotlinx.coroutines.launch
 
 /**
- * The main component of a bracket. Given some number of [rounds], convert them
+ * The main component of a bracket. Given a [bracket], convert the [BracketDisplayModel.rounds]
  * into pages within a horizontal pager, with each page showing the matches for
  * that round. This also includes a tab bar at the top with each round so users can
  * quickly jump to a specific one.
@@ -24,11 +23,12 @@ import kotlinx.coroutines.launch
 @Composable
 fun Bracket(
     bracket: BracketDisplayModel,
+    selectedRound: BracketRoundDisplayModel,
     modifier: Modifier = Modifier,
+    onSelectedRoundChanged: (BracketRoundDisplayModel) -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState()
-    val selectedRound = remember { mutableStateOf(bracket.rounds.first()) }
 
     Column(
         modifier = modifier
@@ -36,12 +36,12 @@ fun Bracket(
     ) {
         BracketRoundTabRow(
             rounds = bracket.rounds,
-            selectedRound = selectedRound.value,
+            selectedRound = selectedRound,
             onRoundSelected = { round ->
-                selectedRound.value = round
+                onSelectedRoundChanged.invoke(round)
 
                 coroutineScope.launch {
-                    pagerState.animateScrollToPage(bracket.rounds.indexOf(selectedRound.value))
+                    pagerState.animateScrollToPage(bracket.rounds.indexOf(selectedRound))
                 }
             },
         )
