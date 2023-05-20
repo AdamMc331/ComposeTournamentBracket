@@ -1,4 +1,4 @@
-package com.adammcneilly.tournament.bracket
+package com.adammcneilly.tournament.bracket.displaymodels
 
 /**
  * Defines a team to be displayed inside of a bracket.

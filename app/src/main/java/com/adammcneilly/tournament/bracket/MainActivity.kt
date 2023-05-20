@@ -14,7 +14,9 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
+import com.adammcneilly.tournament.bracket.displaymodels.BracketDisplayModel
 import com.adammcneilly.tournament.bracket.theme.BracketTheme
+import com.adammcneilly.tournament.bracket.ui.MultiEliminationBracket
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 class MainActivity : ComponentActivity() {
@@ -38,7 +40,7 @@ class MainActivity : ComponentActivity() {
                         BracketDisplayModel("Lower Bracket", TestData.lowerBracketRounds),
                     )
 
-                    DoubleEliminationBracketPager(
+                    MultiEliminationBracket(
                         brackets = brackets,
                     )
                 }

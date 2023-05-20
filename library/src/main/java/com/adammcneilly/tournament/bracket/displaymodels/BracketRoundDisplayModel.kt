@@ -1,4 +1,4 @@
-package com.adammcneilly.tournament.bracket
+package com.adammcneilly.tournament.bracket.displaymodels
 
 /**
  * A [BracketRoundDisplayModel] is a collection of [matches] that take place in the same portion

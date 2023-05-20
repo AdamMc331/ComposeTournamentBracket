@@ -1,4 +1,4 @@
-package com.adammcneilly.tournament.bracket
+package com.adammcneilly.tournament.bracket.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
@@ -13,11 +13,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import com.adammcneilly.tournament.bracket.displaymodels.BracketDisplayModel
 
+/**
+ * An extension on [Bracket] that is meant to support multiple elimination rounds, such a double elimination
+ * tournament. We do this by taking in multiple [brackets], and setting up an [ExposedDropdownMenuBox] to switch
+ * between each bracket.
+ */
 @ExperimentalMaterial3Api
 @ExperimentalFoundationApi
 @Composable
-fun DoubleEliminationBracketPager(
+fun MultiEliminationBracket(
     brackets: List<BracketDisplayModel>,
     modifier: Modifier = Modifier,
 ) {
@@ -57,8 +63,8 @@ fun DoubleEliminationBracketPager(
             }
         }
 
-        BracketPager(
-            rounds = selectedBracket.value.rounds,
+        Bracket(
+            bracket = selectedBracket.value,
             modifier = modifier,
         )
     }
