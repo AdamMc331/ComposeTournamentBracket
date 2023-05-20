@@ -95,15 +95,15 @@ object TestData {
     )
 
     val singleEliminationBracketRounds = listOf(
-        BracketRound(
+        BracketRoundDisplayModel(
             name = "Quarter Finals",
             matches = singleEliminationQuarterFinals,
         ),
-        BracketRound(
+        BracketRoundDisplayModel(
             name = "Semi Finals",
             matches = singleEliminationSemiFinals,
         ),
-        BracketRound(
+        BracketRoundDisplayModel(
             name = "Grand Finals",
             matches = singleEliminationGrandFinals,
         ),
@@ -503,19 +503,19 @@ object TestData {
     )
 
     val upperBracketRounds = listOf(
-        BracketRound("UB Round 1", upperBracketRound1),
-        BracketRound("UB Quarterfinals", upperBracketQuarterfinals),
-        BracketRound("UB Semifinals", upperBracketSemiFinals),
-        BracketRound("UB Final", upperBracketFinals),
-        BracketRound("Grand Final", doubleEliminationGrandFinals),
+        BracketRoundDisplayModel("UB Round 1", upperBracketRound1),
+        BracketRoundDisplayModel("UB Quarterfinals", upperBracketQuarterfinals),
+        BracketRoundDisplayModel("UB Semifinals", upperBracketSemiFinals),
+        BracketRoundDisplayModel("UB Final", upperBracketFinals),
+        BracketRoundDisplayModel("Grand Final", doubleEliminationGrandFinals),
     )
 
     val lowerBracketRounds = listOf(
-        BracketRound("LB Round 1", lowerBracketRound1),
-        BracketRound("LB Round 2", lowerBracketRound2),
-        BracketRound("LB Round 3", lowerBracketRound3),
-        BracketRound("LB Quarterfinals", lowerBracketQuarterFinals),
-        BracketRound("LB Semifinal", lowerBracketSemiFinals),
-        BracketRound("LB Final", lowerBracketFinals),
+        BracketRoundDisplayModel("LB Round 1", lowerBracketRound1),
+        BracketRoundDisplayModel("LB Round 2", lowerBracketRound2),
+        BracketRoundDisplayModel("LB Round 3", lowerBracketRound3),
+        BracketRoundDisplayModel("LB Quarterfinals", lowerBracketQuarterFinals),
+        BracketRoundDisplayModel("LB Semifinal", lowerBracketSemiFinals),
+        BracketRoundDisplayModel("LB Final", lowerBracketFinals),
     )
 }

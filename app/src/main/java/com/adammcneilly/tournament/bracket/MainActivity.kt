@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Modifier
@@ -34,9 +33,13 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier
                         .systemBarsPadding(),
                 ) {
+                    val brackets = listOf(
+                        BracketDisplayModel("Upper Bracket", TestData.upperBracketRounds),
+                        BracketDisplayModel("Lower Bracket", TestData.lowerBracketRounds),
+                    )
+
                     DoubleEliminationBracketPager(
-                        upperBracketRounds = TestData.upperBracketRounds,
-                        lowerBracketRounds = TestData.lowerBracketRounds,
+                        brackets = brackets,
                     )
                 }
             }
@@ -72,9 +75,4 @@ class MainActivity : ComponentActivity() {
             onDispose { }
         }
     }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
 }

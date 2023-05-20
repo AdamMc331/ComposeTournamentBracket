@@ -18,12 +18,11 @@ import androidx.compose.ui.Modifier
 @ExperimentalFoundationApi
 @Composable
 fun DoubleEliminationBracketPager(
-    upperBracketRounds: List<BracketRound>,
-    lowerBracketRounds: List<BracketRound>,
+    brackets: List<BracketDisplayModel>,
     modifier: Modifier = Modifier,
 ) {
     val expanded = remember { mutableStateOf(false) }
-    val selectedText = remember { mutableStateOf("Upper Bracket") }
+    val selectedBracket = remember { mutableStateOf(brackets.first()) }
 
     Column {
         ExposedDropdownMenuBox(
@@ -33,7 +32,7 @@ fun DoubleEliminationBracketPager(
             },
         ) {
             TextField(
-                value = selectedText.value,
+                value = selectedBracket.value.name,
                 onValueChange = {},
                 readOnly = true,
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded.value) },
@@ -46,11 +45,11 @@ fun DoubleEliminationBracketPager(
                 expanded = expanded.value,
                 onDismissRequest = { expanded.value = false },
             ) {
-                listOf("Upper Bracket", "Lower Bracket").forEach { item ->
+                brackets.forEach { item ->
                     DropdownMenuItem(
-                        text = { Text(text = item) },
+                        text = { Text(text = item.name) },
                         onClick = {
-                            selectedText.value = item
+                            selectedBracket.value = item
                             expanded.value = false
                         },
                     )
@@ -59,11 +58,7 @@ fun DoubleEliminationBracketPager(
         }
 
         BracketPager(
-            rounds = if (selectedText.value == "Upper Bracket") {
-                upperBracketRounds
-            } else {
-                lowerBracketRounds
-            },
+            rounds = selectedBracket.value.rounds,
             modifier = modifier,
         )
     }

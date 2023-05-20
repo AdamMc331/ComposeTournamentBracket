@@ -8,9 +8,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.PageSize
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.ScrollableTabRow
@@ -20,10 +21,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 private val BRACKET_ITEM_HEIGHT = 100.dp
@@ -37,17 +36,19 @@ private val BRACKET_ITEM_HEIGHT = 100.dp
 @ExperimentalFoundationApi
 @Composable
 fun BracketPager(
-    rounds: List<BracketRound>,
+    rounds: List<BracketRoundDisplayModel>,
     modifier: Modifier = Modifier,
 ) {
     val pagerState = rememberPagerState()
-    val coroutineScope = rememberCoroutineScope()
+    val lazyListStates = List(rounds.size) {
+        rememberLazyListState()
+    }
 
     Column(
         modifier = modifier
             .fillMaxWidth(),
     ) {
-        BracketRoundTabs(pagerState, rounds, coroutineScope)
+        BracketRoundTabs(pagerState, rounds)
 
         HorizontalPager(
             pageCount = rounds.size,
@@ -55,43 +56,73 @@ fun BracketPager(
                 .weight(1F),
             contentPadding = PaddingValues(16.dp),
             pageSpacing = 16.dp,
-            pageSize = object : PageSize {
-                override fun Density.calculateMainAxisPageSize(availableSpace: Int, pageSpacing: Int): Int {
-                    return availableSpace - (2 * pageSpacing)
-                }
-            },
+            pageSize = BracketPageSize,
             state = pagerState,
         ) { pageIndex ->
+            val round = rounds[pageIndex]
+            val previousRound = rounds.getOrNull(pageIndex - 1)
 
-            val isCurrentOrPreviousPage = pageIndex <= pagerState.currentPage
-            val roundSize = rounds[pageIndex].matches.size
-            val previousRoundSize = rounds.getOrNull(pageIndex - 1)?.matches?.size
-            val sameSizeAsLastRound = roundSize == previousRoundSize
-            val itemHeight = if (isCurrentOrPreviousPage || sameSizeAsLastRound) {
-                BRACKET_ITEM_HEIGHT
-            } else {
-                val fullHeight = BRACKET_ITEM_HEIGHT * 2
-                val diffByOffset = (fullHeight - BRACKET_ITEM_HEIGHT) * pagerState.currentPageOffsetFraction
-                val heightToRender = (fullHeight - diffByOffset)
-                heightToRender
-            }
+            val itemHeight = calculateItemHeight(pageIndex, pagerState, round, previousRound)
+
+            SyncLazyListStates(lazyListStates, pageIndex)
 
             RoundMatchList(
-                matches = rounds[pageIndex].matches,
+                matches = round.matches,
                 itemHeight = itemHeight,
+                lazyListState = lazyListStates[pageIndex],
             )
         }
     }
+}
+
+/**
+ * Syncs the lazy list state of the current [pageIndex] and the next one.
+ */
+@Composable
+private fun SyncLazyListStates(
+    lazyListStates: List<LazyListState>,
+    pageIndex: Int,
+) {
+    val currentLazyListState = lazyListStates[pageIndex]
+    val nextLazyListState = lazyListStates.getOrNull(pageIndex + 1)
+
+    if (nextLazyListState != null) {
+        currentLazyListState.SyncLazyListState(otherState = nextLazyListState)
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+private fun calculateItemHeight(
+    pageIndex: Int,
+    pagerState: PagerState,
+    currentRound: BracketRoundDisplayModel,
+    previousRound: BracketRoundDisplayModel?,
+): Dp {
+    val isCurrentOrPreviousPage = pageIndex <= pagerState.currentPage
+    val roundSize = currentRound.matches.size
+    val previousRoundSize = previousRound?.matches?.size
+    val sameSizeAsLastRound = roundSize == previousRoundSize
+    val itemHeight = if (isCurrentOrPreviousPage || sameSizeAsLastRound) {
+        BRACKET_ITEM_HEIGHT
+    } else {
+        val fullHeight = BRACKET_ITEM_HEIGHT * 2
+        val diffByOffset = (fullHeight - BRACKET_ITEM_HEIGHT) * pagerState.currentPageOffsetFraction
+        val heightToRender = (fullHeight - diffByOffset)
+        heightToRender
+    }
+    return itemHeight
 }
 
 @Composable
 private fun RoundMatchList(
     matches: List<BracketMatchDisplayModel>,
     itemHeight: Dp,
+    lazyListState: LazyListState,
 ) {
     LazyColumn(
         modifier = Modifier
             .fillMaxHeight(),
+        state = lazyListState,
     ) {
         items(matches) { match ->
             BracketMatchItem(
@@ -107,9 +138,10 @@ private fun RoundMatchList(
 @Composable
 private fun BracketRoundTabs(
     pagerState: PagerState,
-    rounds: List<BracketRound>,
-    coroutineScope: CoroutineScope,
+    rounds: List<BracketRoundDisplayModel>,
 ) {
+    val coroutineScope = rememberCoroutineScope()
+
     ScrollableTabRow(
         selectedTabIndex = pagerState.currentPage,
         edgePadding = 16.dp,

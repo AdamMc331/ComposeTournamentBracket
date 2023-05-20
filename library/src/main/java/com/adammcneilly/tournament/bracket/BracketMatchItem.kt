@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
  * match items appear.
  */
 @Composable
-fun BracketMatchItem(
+internal fun BracketMatchItem(
     match: BracketMatchDisplayModel,
     modifier: Modifier = Modifier,
     contentColor: Color = LocalContentColor.current,
