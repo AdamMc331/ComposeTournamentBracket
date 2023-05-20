@@ -72,8 +72,8 @@ private fun SyncLazyListStates(
  * Calculates the height of an item based on our [pageIndex]. For current or previous pages, we'll default
  * to the [BRACKET_ITEM_HEIGHT].
  *
- * For future pages, we simulate the bracket UI by making each item double the [BRACKET_ITEM_HEIGHT] (and centering it), which
- * ultimately gives the appearance of a tree.
+ * For future pages, we simulate the bracket UI by making each item double the [BRACKET_ITEM_HEIGHT]
+ * (and centering it), which ultimately gives the appearance of a tree.
  *
  * Additionally, we calculate the [PagerState.currentPageOffsetFraction] of our current page so we can tweak
  * the height of the item to simulate an animation that the bracket is shrinking or growing as user
