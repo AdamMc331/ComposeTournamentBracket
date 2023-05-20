@@ -11,16 +11,20 @@ import androidx.compose.runtime.LaunchedEffect
 @Composable
 fun LazyListState.SyncLazyListState(otherState: LazyListState) {
     LaunchedEffect(this.firstVisibleItemScrollOffset) {
-        otherState.scrollToItem(
-            this@SyncLazyListState.firstVisibleItemIndex,
-            this@SyncLazyListState.firstVisibleItemScrollOffset,
-        )
+        if (!otherState.isScrollInProgress) {
+            otherState.scrollToItem(
+                this@SyncLazyListState.firstVisibleItemIndex,
+                this@SyncLazyListState.firstVisibleItemScrollOffset,
+            )
+        }
     }
 
     LaunchedEffect(otherState.firstVisibleItemScrollOffset) {
-        this@SyncLazyListState.scrollToItem(
-            otherState.firstVisibleItemIndex,
-            otherState.firstVisibleItemScrollOffset,
-        )
+        if (!this@SyncLazyListState.isScrollInProgress) {
+            this@SyncLazyListState.scrollToItem(
+                otherState.firstVisibleItemIndex,
+                otherState.firstVisibleItemScrollOffset,
+            )
+        }
     }
 }
