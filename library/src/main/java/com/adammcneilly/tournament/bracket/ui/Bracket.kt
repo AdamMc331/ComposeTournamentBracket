@@ -3,7 +3,7 @@ package com.adammcneilly.tournament.bracket.ui
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -24,11 +24,11 @@ import kotlinx.coroutines.launch
 fun Bracket(
     bracket: BracketDisplayModel,
     selectedRound: BracketRoundDisplayModel,
+    pagerState: PagerState,
     modifier: Modifier = Modifier,
     onSelectedRoundChanged: (BracketRoundDisplayModel) -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val pagerState = rememberPagerState()
 
     Column(
         modifier = modifier
