@@ -1,4 +1,4 @@
-package com.adammcneilly.tournament.bracket
+package com.adammcneilly.tournament.bracket.displaymodels
 
 /**
  * Represents an entire bracket in a tournament. For a single elimination tournament, there should be only

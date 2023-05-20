@@ -1,4 +1,4 @@
-package com.adammcneilly.tournament.bracket
+package com.adammcneilly.tournament.bracket.internal
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.pager.PageSize
@@ -9,7 +9,7 @@ import androidx.compose.ui.unit.Density
  * so we can see a peak into the next page.
  */
 @OptIn(ExperimentalFoundationApi::class)
-object BracketPageSize : PageSize {
+internal object BracketPageSize : PageSize {
     override fun Density.calculateMainAxisPageSize(availableSpace: Int, pageSpacing: Int): Int {
         return availableSpace - (2 * pageSpacing)
     }

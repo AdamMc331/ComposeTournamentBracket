@@ -1,4 +1,4 @@
-package com.adammcneilly.tournament.bracket
+package com.adammcneilly.tournament.bracket.internal
 
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
@@ -9,7 +9,7 @@ import androidx.compose.runtime.LaunchedEffect
  * and applying those same values to the [otherState].
  */
 @Composable
-fun LazyListState.SyncLazyListState(otherState: LazyListState) {
+internal fun LazyListState.SyncLazyListState(otherState: LazyListState) {
     LaunchedEffect(this.firstVisibleItemScrollOffset) {
         if (!otherState.isScrollInProgress) {
             otherState.scrollToItem(

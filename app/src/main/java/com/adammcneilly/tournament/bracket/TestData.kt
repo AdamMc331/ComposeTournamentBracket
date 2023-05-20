@@ -1,5 +1,9 @@
 package com.adammcneilly.tournament.bracket
 
+import com.adammcneilly.tournament.bracket.displaymodels.BracketMatchDisplayModel
+import com.adammcneilly.tournament.bracket.displaymodels.BracketRoundDisplayModel
+import com.adammcneilly.tournament.bracket.displaymodels.BracketTeamDisplayModel
+
 object TestData {
     private val singleEliminationQuarterFinals = listOf(
         BracketMatchDisplayModel(
