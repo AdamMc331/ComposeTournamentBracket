@@ -1,17 +1,13 @@
-package com.adammcneilly.tournament.bracket.ui
+package com.adammcneilly.tournament.bracket.internal
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import com.adammcneilly.tournament.bracket.displaymodels.BracketDisplayModel
 import com.adammcneilly.tournament.bracket.displaymodels.BracketRoundDisplayModel
-import com.adammcneilly.tournament.bracket.internal.BracketRoundTabRow
-import com.adammcneilly.tournament.bracket.internal.BracketRoundsPager
-import kotlinx.coroutines.launch
 
 /**
  * The main component of a bracket. Given a [bracket], convert the [BracketDisplayModel.rounds]
@@ -21,15 +17,13 @@ import kotlinx.coroutines.launch
  */
 @ExperimentalFoundationApi
 @Composable
-fun Bracket(
+internal fun Bracket(
     bracket: BracketDisplayModel,
     selectedRound: BracketRoundDisplayModel,
     pagerState: PagerState,
-    modifier: Modifier = Modifier,
     onSelectedRoundChanged: (BracketRoundDisplayModel) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    val coroutineScope = rememberCoroutineScope()
-
     Column(
         modifier = modifier
             .fillMaxWidth(),
@@ -39,10 +33,6 @@ fun Bracket(
             selectedRound = selectedRound,
             onRoundSelected = { round ->
                 onSelectedRoundChanged.invoke(round)
-
-                coroutineScope.launch {
-                    pagerState.animateScrollToPage(bracket.rounds.indexOf(selectedRound))
-                }
             },
         )
 
