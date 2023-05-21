@@ -1,5 +1,6 @@
 package com.adammcneilly.tournament.bracket
 
+import com.adammcneilly.tournament.bracket.displaymodels.BracketDisplayModel
 import com.adammcneilly.tournament.bracket.displaymodels.BracketMatchDisplayModel
 import com.adammcneilly.tournament.bracket.displaymodels.BracketRoundDisplayModel
 import com.adammcneilly.tournament.bracket.displaymodels.BracketTeamDisplayModel
@@ -98,7 +99,7 @@ object TestData {
         ),
     )
 
-    val singleEliminationBracketRounds = listOf(
+    private val singleEliminationBracketRounds = listOf(
         BracketRoundDisplayModel(
             name = "Quarter Finals",
             matches = singleEliminationQuarterFinals,
@@ -111,6 +112,11 @@ object TestData {
             name = "Grand Finals",
             matches = singleEliminationGrandFinals,
         ),
+    )
+
+    val singleEliminationBracket = BracketDisplayModel(
+        name = "RLCS Fall Major",
+        rounds = singleEliminationBracketRounds,
     )
 
     private val upperBracketRound1 = listOf(

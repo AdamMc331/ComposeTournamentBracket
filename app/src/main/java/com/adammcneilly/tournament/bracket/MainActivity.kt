@@ -5,17 +5,27 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.adammcneilly.tournament.bracket.displaymodels.BracketDisplayModel
 import com.adammcneilly.tournament.bracket.theme.BracketTheme
+import com.adammcneilly.tournament.bracket.ui.MultiEliminationBracket
 import com.adammcneilly.tournament.bracket.ui.SingleEliminationBracket
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
@@ -35,16 +45,49 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier
                         .systemBarsPadding(),
                 ) {
-                    val brackets = listOf(
-                        BracketDisplayModel("Upper Bracket", TestData.upperBracketRounds),
-                        BracketDisplayModel("Lower Bracket", TestData.lowerBracketRounds),
-                    )
+                    val navController = rememberNavController()
 
-                    SingleEliminationBracket(bracket = brackets.first())
+                    NavHost(navController = navController, startDestination = "home") {
+                        composable("home") {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxSize(),
+                                verticalArrangement = Arrangement.SpaceAround,
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                            ) {
+                                Button(
+                                    onClick = {
+                                        navController.navigate("single_elimination")
+                                    },
+                                ) {
+                                    Text(
+                                        text = "Single Elimination",
+                                    )
+                                }
 
-//                    MultiEliminationBracket(
-//                        brackets = brackets,
-//                    )
+                                Button(
+                                    onClick = {
+                                        navController.navigate("double_elimination")
+                                    },
+                                ) {
+                                    Text(
+                                        text = "Double Elimination",
+                                    )
+                                }
+                            }
+                        }
+                        composable("single_elimination") {
+                            SingleEliminationBracket(bracket = TestData.singleEliminationBracket)
+                        }
+                        composable("double_elimination") {
+                            val brackets = listOf(
+                                BracketDisplayModel("Upper Bracket", TestData.upperBracketRounds),
+                                BracketDisplayModel("Lower Bracket", TestData.lowerBracketRounds),
+                            )
+
+                            MultiEliminationBracket(brackets = brackets)
+                        }
+                    }
                 }
             }
         }
