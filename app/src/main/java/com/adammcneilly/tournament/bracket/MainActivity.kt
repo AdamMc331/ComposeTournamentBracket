@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
 import com.adammcneilly.tournament.bracket.displaymodels.BracketDisplayModel
 import com.adammcneilly.tournament.bracket.theme.BracketTheme
-import com.adammcneilly.tournament.bracket.ui.MultiEliminationBracket
+import com.adammcneilly.tournament.bracket.ui.SingleEliminationBracket
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 class MainActivity : ComponentActivity() {
@@ -40,9 +40,11 @@ class MainActivity : ComponentActivity() {
                         BracketDisplayModel("Lower Bracket", TestData.lowerBracketRounds),
                     )
 
-                    MultiEliminationBracket(
-                        brackets = brackets,
-                    )
+                    SingleEliminationBracket(bracket = brackets.first())
+
+//                    MultiEliminationBracket(
+//                        brackets = brackets,
+//                    )
                 }
             }
         }

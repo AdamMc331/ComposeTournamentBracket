@@ -11,11 +11,14 @@ import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.adammcneilly.tournament.bracket.displaymodels.BracketDisplayModel
+import com.adammcneilly.tournament.bracket.internal.Bracket
 import kotlinx.coroutines.launch
 
 /**
@@ -30,44 +33,49 @@ fun MultiEliminationBracket(
     brackets: List<BracketDisplayModel>,
     modifier: Modifier = Modifier,
 ) {
-    val expanded = remember { mutableStateOf(false) }
-    val selectedBracket = remember { mutableStateOf(brackets.first()) }
-    // I had to pull this out because switching between brackets was causing an issue because the
-    // selected round as it was remembered by the bracket composable was no longer the same.
-    // I think a long term solution is to create a `BracketState` data class.
+    var dropdownExpanded by remember {
+        mutableStateOf(false)
+    }
+
+    var selectedBracket by remember {
+        mutableStateOf(brackets.first())
+    }
+
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
 
     Column {
         ExposedDropdownMenuBox(
-            expanded = expanded.value,
+            expanded = dropdownExpanded,
             onExpandedChange = {
-                expanded.value = !expanded.value
+                dropdownExpanded = !dropdownExpanded
             },
         ) {
             TextField(
-                value = selectedBracket.value.name,
+                value = selectedBracket.name,
                 onValueChange = {},
                 readOnly = true,
-                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded.value) },
+                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = dropdownExpanded) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .menuAnchor(),
             )
 
             ExposedDropdownMenu(
-                expanded = expanded.value,
-                onDismissRequest = { expanded.value = false },
+                expanded = dropdownExpanded,
+                onDismissRequest = {
+                    dropdownExpanded = false
+                },
             ) {
                 brackets.forEach { item ->
                     DropdownMenuItem(
                         text = { Text(text = item.name) },
                         onClick = {
-                            selectedBracket.value = item
+                            selectedBracket = item
                             coroutineScope.launch {
                                 pagerState.scrollToPage(0)
                             }
-                            expanded.value = false
+                            dropdownExpanded = false
                         },
                     )
                 }
@@ -75,13 +83,13 @@ fun MultiEliminationBracket(
         }
 
         Bracket(
-            bracket = selectedBracket.value,
-            selectedRound = selectedBracket.value.rounds[pagerState.currentPage],
+            bracket = selectedBracket,
+            selectedRound = selectedBracket.rounds[pagerState.currentPage],
             pagerState = pagerState,
             modifier = modifier,
             onSelectedRoundChanged = { round ->
                 coroutineScope.launch {
-                    pagerState.animateScrollToPage(selectedBracket.value.rounds.indexOf(round))
+                    pagerState.animateScrollToPage(selectedBracket.rounds.indexOf(round))
                 }
             },
         )

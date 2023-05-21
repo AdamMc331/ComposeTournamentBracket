@@ -1,4 +1,4 @@
-package com.adammcneilly.tournament.bracket.ui
+package com.adammcneilly.tournament.bracket.internal
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
@@ -21,15 +21,13 @@ import kotlinx.coroutines.launch
  */
 @ExperimentalFoundationApi
 @Composable
-fun Bracket(
+internal fun Bracket(
     bracket: BracketDisplayModel,
     selectedRound: BracketRoundDisplayModel,
     pagerState: PagerState,
-    modifier: Modifier = Modifier,
     onSelectedRoundChanged: (BracketRoundDisplayModel) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    val coroutineScope = rememberCoroutineScope()
-
     Column(
         modifier = modifier
             .fillMaxWidth(),
@@ -39,10 +37,6 @@ fun Bracket(
             selectedRound = selectedRound,
             onRoundSelected = { round ->
                 onSelectedRoundChanged.invoke(round)
-
-                coroutineScope.launch {
-                    pagerState.animateScrollToPage(bracket.rounds.indexOf(selectedRound))
-                }
             },
         )
 
