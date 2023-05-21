@@ -5,13 +5,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import com.adammcneilly.tournament.bracket.displaymodels.BracketDisplayModel
 import com.adammcneilly.tournament.bracket.displaymodels.BracketRoundDisplayModel
-import com.adammcneilly.tournament.bracket.internal.BracketRoundTabRow
-import com.adammcneilly.tournament.bracket.internal.BracketRoundsPager
-import kotlinx.coroutines.launch
 
 /**
  * The main component of a bracket. Given a [bracket], convert the [BracketDisplayModel.rounds]
