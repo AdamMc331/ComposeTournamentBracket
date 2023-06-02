@@ -1,3 +1,5 @@
+# NOTE: This library is in progress and not published on any public package managers.
+
 # Compose Tournament Bracket
 
 This is a library used to render a tournament bracket with Jetpack Compose.
