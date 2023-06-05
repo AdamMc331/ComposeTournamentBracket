@@ -21,10 +21,12 @@ buildscript {
 plugins {
     id("io.gitlab.arturbosch.detekt").version(libs.versions.detektGradlePlugin)
     id("org.jmailen.kotlinter").version(libs.versions.kotlinter).apply(false)
+    id("io.github.gradle-nexus.publish-plugin").version(libs.versions.publishPlugin)
 }
 
 apply(from = "buildscripts/githooks.gradle")
 apply(from = "buildscripts/versionsplugin.gradle")
+apply(from = "buildscripts/publish-root.gradle")
 
 subprojects {
     apply(from = "../buildscripts/detekt.gradle")

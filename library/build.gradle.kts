@@ -1,8 +1,17 @@
+buildscript {
+    extra.apply {
+        set("PUBLISH_GROUP_ID", "com.adammcneilly")
+        set("PUBLISH_VERSION", "0.0.1")
+        set("PUBLISH_ARTIFACT_ID", "composetournamentbracket")
+    }
+}
+
+apply(from = "${rootProject.projectDir}/buildscripts/publish-module.gradle")
+
 plugins {
     id("com.android.library")
     id("kotlin-android")
     id("org.jmailen.kotlinter")
-    id("maven-publish")
 }
 
 android {
@@ -55,24 +64,4 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.junit)
     androidTestImplementation(libs.androidx.test.espresso.core)
-}
-
-publishing {
-    publications {
-        register<MavenPublication>("release") {
-            groupId = "com.adammcneilly.tournamentbracket"
-            artifactId = "tournamentbracket"
-            version = "0.1"
-
-            afterEvaluate {
-                from(components["release"])
-            }
-        }
-    }
-    repositories {
-        maven {
-            name = "tournamentbracket"
-            url = uri("${project.buildDir}/repo")
-        }
-    }
 }

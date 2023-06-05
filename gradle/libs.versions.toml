@@ -19,6 +19,7 @@ lifecycle = "2.6.1"
 material = "1.9.0"
 minSdk = "21"
 navigation = "2.5.3"
+publishPlugin = "1.1.0"
 
 [libraries]
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
