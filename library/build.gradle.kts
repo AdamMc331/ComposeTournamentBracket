@@ -1,3 +1,13 @@
+buildscript {
+    extra.apply {
+        set("PUBLISH_GROUP_ID", "com.adammcneilly")
+        set("PUBLISH_VERSION", "0.0.1")
+        set("PUBLISH_ARTIFACT_ID", "composetournamentbracket")
+    }
+}
+
+apply(from = "${rootProject.projectDir}/buildscripts/publish-module.gradle")
+
 plugins {
     id("com.android.library")
     id("kotlin-android")
