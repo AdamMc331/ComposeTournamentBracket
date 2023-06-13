@@ -1,8 +1,32 @@
-# NOTE: This library is in progress and not published on any public package managers.
+# Status
+
+At the moment, this project is in active development and as such should not be treated as a stable library dependency. To monitor the progress, please refer to the open [Issues](https://github.com/AdamMc331/ComposeTournamentBracket/issues) and [Milestones](https://github.com/AdamMc331/ComposeTournamentBracket/milestones)
 
 # Compose Tournament Bracket
 
 This is a library used to render a tournament bracket with Jetpack Compose.
+
+## Sample
+
+A `SingleEliminationBracket` can be used to demonstrate a series of elimination events resulting in a single winning team.
+
+<details>
+
+<summary>Single Elimination Bracket</summary>
+
+![](assets/SingleElimination.png)
+
+</details>
+
+A `MultiEliminationBracket` is used for double elimination brackets, where a team has multiple lives in a tournament, and we want to see each bracket area by itself.
+
+<details>
+
+<summary>Multi Elimination Bracket</summary>
+
+![](assets/DoubleElimination.png)
+
+</details>
 
 ## Displaymodel Classes
 
@@ -72,4 +96,12 @@ Scaffold {
 
 ## Feature Requests
 
-This project is incredibly minimal, and mostly maintained for a separate personal project. However, if you have any feature requests, feel free to submit an [issue](https://github.com/AdamMc331/ComposeTournamentBracket/issues). 
+This project is incredibly minimal, and mostly maintained for a separate personal project. However, if you have any feature requests, feel free to submit an [issue](https://github.com/AdamMc331/ComposeTournamentBracket/issues).
+
+## Download
+
+This library is hosted on MavenCentral. You can include it in your apps by adding the following dependency:
+
+```kotlin
+implementation("com.adammcneilly:composetournamentbracket:0.0.1")
+```
