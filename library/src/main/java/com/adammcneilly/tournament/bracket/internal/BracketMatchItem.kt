@@ -4,13 +4,12 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Divider
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.adammcneilly.tournament.bracket.displaymodels.BracketMatchDisplayModel
+import com.adammcneilly.tournament.bracket.ui.BracketColors
 
 /**
  * Defines an item that is used to represent a [match] inside of a bracket.
@@ -23,7 +22,7 @@ import com.adammcneilly.tournament.bracket.displaymodels.BracketMatchDisplayMode
 internal fun BracketMatchItem(
     match: BracketMatchDisplayModel,
     modifier: Modifier = Modifier,
-    contentColor: Color = LocalContentColor.current,
+    colors: BracketColors.MatchColors,
 ) {
     Box(
         modifier = modifier,
@@ -32,20 +31,22 @@ internal fun BracketMatchItem(
             modifier = Modifier
                 .border(
                     width = 1.dp,
-                    color = contentColor,
+                    color = colors.borderColor,
                 )
                 .align(Alignment.Center),
         ) {
             TeamRow(
                 team = match.topTeam,
-                color = contentColor,
+                colors = colors,
             )
 
-            Divider()
+            Divider(
+                color = colors.dividerColor,
+            )
 
             TeamRow(
                 team = match.bottomTeam,
-                color = contentColor,
+                colors = colors,
             )
         }
     }

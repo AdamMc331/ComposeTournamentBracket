@@ -7,11 +7,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.adammcneilly.tournament.bracket.displaymodels.BracketTeamDisplayModel
+import com.adammcneilly.tournament.bracket.ui.BracketColors
 
 /**
  * Component to render a [team] inside of a [BracketMatchItem].
@@ -19,7 +19,7 @@ import com.adammcneilly.tournament.bracket.displaymodels.BracketTeamDisplayModel
 @Composable
 internal fun TeamRow(
     team: BracketTeamDisplayModel,
-    color: Color,
+    colors: BracketColors.MatchColors,
 ) {
     val fontWeight: FontWeight? = if (team.isWinner) {
         FontWeight.Bold
@@ -31,7 +31,7 @@ internal fun TeamRow(
         Text(
             text = team.name,
             fontWeight = fontWeight,
-            color = color,
+            color = colors.contentColor,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier
@@ -44,7 +44,7 @@ internal fun TeamRow(
         Text(
             text = team.score,
             fontWeight = fontWeight,
-            color = color,
+            color = colors.contentColor,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier

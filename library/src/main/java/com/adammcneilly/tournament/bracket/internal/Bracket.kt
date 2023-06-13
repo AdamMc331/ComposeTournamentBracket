@@ -8,6 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.adammcneilly.tournament.bracket.displaymodels.BracketDisplayModel
 import com.adammcneilly.tournament.bracket.displaymodels.BracketRoundDisplayModel
+import com.adammcneilly.tournament.bracket.ui.BracketColors
+import com.adammcneilly.tournament.bracket.ui.BracketDefaults
 
 /**
  * The main component of a bracket. Given a [bracket], convert the [BracketDisplayModel.rounds]
@@ -23,6 +25,7 @@ internal fun Bracket(
     pagerState: PagerState,
     onSelectedRoundChanged: (BracketRoundDisplayModel) -> Unit,
     modifier: Modifier = Modifier,
+    colors: BracketColors = BracketDefaults.bracketColors(),
 ) {
     Column(
         modifier = modifier
@@ -34,6 +37,7 @@ internal fun Bracket(
             onRoundSelected = { round ->
                 onSelectedRoundChanged.invoke(round)
             },
+            colors = colors.tabColors,
         )
 
         BracketRoundsPager(

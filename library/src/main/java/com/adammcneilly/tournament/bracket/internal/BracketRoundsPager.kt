@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.adammcneilly.tournament.bracket.displaymodels.BracketRoundDisplayModel
+import com.adammcneilly.tournament.bracket.ui.BracketColors
 
 private val BRACKET_ITEM_HEIGHT = 100.dp
 
@@ -23,6 +24,7 @@ private val BRACKET_ITEM_HEIGHT = 100.dp
 internal fun BracketRoundsPager(
     rounds: List<BracketRoundDisplayModel>,
     pagerState: PagerState,
+    colors: BracketColors,
     modifier: Modifier = Modifier,
 ) {
     val lazyListStates = List(rounds.size) {
@@ -48,6 +50,7 @@ internal fun BracketRoundsPager(
             matches = round.matches,
             itemHeight = itemHeight,
             lazyListState = lazyListStates[pageIndex],
+            colors = colors,
         )
     }
 }
