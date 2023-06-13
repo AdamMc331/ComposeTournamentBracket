@@ -20,6 +20,7 @@ lifecycle = "2.6.1"
 material = "1.9.0"
 minSdk = "21"
 navigation = "2.6.0"
+paparazziGradlePlugin = "1.3.0"
 publishPlugin = "1.1.0"
 
 [libraries]
@@ -46,4 +47,5 @@ gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
 gradle-versions-plugin = { module = "com.github.ben-manes:gradle-versions-plugin", version.ref = "gradleVersionsPlugin" }
 junit = { module = "junit:junit", version.ref = "junit" }
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinGradlePlugin" }
+paparazzi-gradle-plugin = { module = "app.cash.paparazzi:paparazzi-gradle-plugin", version.ref = "paparazziGradlePlugin" }
 square-leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakCanary" }
