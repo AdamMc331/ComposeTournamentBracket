@@ -12,7 +12,7 @@ plugins {
     id("com.android.library")
     id("kotlin-android")
     id("org.jmailen.kotlinter")
-    id("app.cash.paparazzi")//.version(libs.versions.paparazzi.get())
+    id("app.cash.paparazzi")
 }
 
 android {
