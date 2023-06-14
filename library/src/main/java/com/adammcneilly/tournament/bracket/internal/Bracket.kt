@@ -4,6 +4,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.pager.PagerState
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.adammcneilly.tournament.bracket.displaymodels.BracketDisplayModel
@@ -26,25 +27,29 @@ internal fun Bracket(
     modifier: Modifier = Modifier,
     colors: BracketColors,
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth(),
+    Surface(
+        modifier = modifier,
     ) {
-        BracketRoundTabRow(
-            rounds = bracket.rounds,
-            selectedRound = selectedRound,
-            onRoundSelected = { round ->
-                onSelectedRoundChanged.invoke(round)
-            },
-            colors = colors.tabColors,
-        )
-
-        BracketRoundsPager(
-            rounds = bracket.rounds,
-            pagerState = pagerState,
+        Column(
             modifier = Modifier
-                .weight(1F),
-            colors = colors,
-        )
+                .fillMaxWidth(),
+        ) {
+            BracketRoundTabRow(
+                rounds = bracket.rounds,
+                selectedRound = selectedRound,
+                onRoundSelected = { round ->
+                    onSelectedRoundChanged.invoke(round)
+                },
+                colors = colors.tabColors,
+            )
+
+            BracketRoundsPager(
+                rounds = bracket.rounds,
+                pagerState = pagerState,
+                modifier = Modifier
+                    .weight(1F),
+                colors = colors,
+            )
+        }
     }
 }
