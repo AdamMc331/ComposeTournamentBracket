@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
 fun SingleEliminationBracket(
     bracket: BracketDisplayModel,
     modifier: Modifier = Modifier,
+    colors: BracketColors = BracketDefaults.bracketColors(),
 ) {
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
@@ -33,5 +34,6 @@ fun SingleEliminationBracket(
             }
         },
         modifier = modifier,
+        colors = colors,
     )
 }

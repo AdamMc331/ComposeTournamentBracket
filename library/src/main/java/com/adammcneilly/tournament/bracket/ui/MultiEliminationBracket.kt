@@ -32,6 +32,7 @@ import kotlinx.coroutines.launch
 fun MultiEliminationBracket(
     brackets: List<BracketDisplayModel>,
     modifier: Modifier = Modifier,
+    colors: BracketColors = BracketDefaults.bracketColors(),
 ) {
     var dropdownExpanded by remember {
         mutableStateOf(false)
@@ -59,6 +60,7 @@ fun MultiEliminationBracket(
                 modifier = Modifier
                     .fillMaxWidth()
                     .menuAnchor(),
+                colors = colors.dropdownColors.textFieldColors,
             )
 
             ExposedDropdownMenu(
@@ -77,6 +79,7 @@ fun MultiEliminationBracket(
                             }
                             dropdownExpanded = false
                         },
+                        colors = colors.dropdownColors.menuItemColors,
                     )
                 }
             }
@@ -92,6 +95,7 @@ fun MultiEliminationBracket(
                     pagerState.animateScrollToPage(selectedBracket.rounds.indexOf(round))
                 }
             },
+            colors = colors,
         )
     }
 }
